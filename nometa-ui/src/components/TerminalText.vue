@@ -38,6 +38,7 @@ onMounted(() => {
 <style scoped>
 .terminal-text {
   display: inline-block;
+  font-family: 'KodeMono';
 }
 
 .cursor {

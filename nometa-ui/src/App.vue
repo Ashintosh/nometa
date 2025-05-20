@@ -6,14 +6,6 @@ import TerminalText from '@/components/TerminalText.vue'
 const isLoaded = ref(false);
 const isMenuOpen = ref(false);
 
-const showButtons = ref(false);
-
-const onTypingComplete = () => {
-  setTimeout(() => {
-    showButtons.value = true;
-  }, 200);
-};
-
 onMounted(() => {
   window.addEventListener('load', () => {
       isLoaded.value = true;
@@ -63,8 +55,11 @@ header {
 
 .title-text {
   font-size: 32px;
-  font-family: 'SixtyFour';
   width: 400px;
+}
+
+.title-text :deep(.terminal-text) {
+  font-family: 'SixtyFour';
 }
 
 .nav-bar {
@@ -202,7 +197,7 @@ header {
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 690px) {
   .title-text {
     padding-left: 2rem;
   }
