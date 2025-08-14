@@ -1,28 +1,15 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-
 import PageHeader from '@/components/PageHeader.vue';
-
-import * as AOS from 'aos';
-import 'aos/dist/aos.css';
-
-onMounted(() => {
-  window.addEventListener('load', () => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  });
-})
+import heroVideo from '@/assets/videos/hero-background.mp4';
 </script>
 
 <template>
   <PageHeader class="blur-header" data-aos="fade-down" data-aos-duration="500" />
-
+  
   <!-- Hero section -->
   <div class="hero d-flex flex-column justify-content-center align-items-center text-center pb-7">
-    <video autoplay muted loop class="hero-video">
-      <source src="../assets/videos/hero-background.mp4" type="video/mp4" />
+    <video :src="heroVideo" autoplay muted loop class="hero-video">
+      <!-- <source src="@/assets/videos/hero-background.mp4" type="video/mp4" /> -->
       Your browser does not support the video tag.
     </video>
     
@@ -49,31 +36,31 @@ onMounted(() => {
     
     <div class="features-container d-flex gap-4 flex-wrap justify-content-center">
       <div class="feature-box" id="pink" data-aos="fade-down">
-        <img src="../assets/images/customize.png" alt="Customize" class="feature-icon">
+        <img src="@/assets/images/customize.png" alt="Customize" class="feature-icon">
         <h3>Customization</h3>
         <p>Customize your personal bio with colors, music, videos, and more!</p>
       </div>
 
       <div class="feature-box" id="green" data-aos="fade-down" data-aos-delay="100">
-        <img src="../assets/images/analytics.png" alt="Analytics" class="feature-icon">
+        <img src="@/assets/images/analytics.png" alt="Analytics" class="feature-icon">
         <h3>Analytics</h3>
         <p>Get insights into your bio's visits, referrers, and even geographical reach.</p>
       </div>
 
       <div class="feature-box" id="pink" data-aos="fade-down" data-aos-delay="200">
-        <img src="../assets/images/socials.png" alt="Socials" class="feature-icon">
+        <img src="@/assets/images/socials.png" alt="Socials" class="feature-icon">
         <h3>Social Links</h3>
         <p>Add social links to your profile so everyone knows where to find you.</p>
       </div>
 
       <div class="feature-box" id="green" data-aos="fade-down" data-aos-delay="300">
-        <img src="../assets/images/lock.png" alt="Lock" class="feature-icon">
+        <img src="@/assets/images/lock.png" alt="Lock" class="feature-icon">
         <h3>Secure</h3>
         <p>Add data is stored securely with AES 256-bit encryption where needed.</p>
       </div>
 
       <div class="feature-box" id="pink" data-aos="fade-down" data-aos-delay="400">
-        <img src="../assets/images/reliable.png" alt="Reliable" class="feature-icon">
+        <img src="@/assets/images/reliable.png" alt="Reliable" class="feature-icon">
         <h3>Reliable</h3>
         <p>We use reliable servers with high up-time so that you can always access your bio.</p>
       </div>
