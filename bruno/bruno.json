@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "nometa",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
