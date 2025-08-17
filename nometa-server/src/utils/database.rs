@@ -49,25 +49,4 @@ impl PostgreSQL {
     pub(crate) fn pool(&self) -> Pool<Postgres> {
         self.pool.clone()
     }
-
-    // /// Create a PostgreSQL URL from environment variables and docker secrets
-    // fn build_url_from_env() -> String {
-    //     let env_vars = match cfg!(debug_assertions) {
-    //         true => vec!["POSTGRES_USER_DEV", "POSTGRES_PASSWORD_DEV", "POSTGRES_HOST_DEV", "POSTGRES_PORT_DEV", "POSTGRES_DB_DEV"],
-    //         false => vec!["POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_HOST", "POSTGRES_PORT", "POSTGRES_DB"]
-    //     };
-
-    //     let mut env_values = Vec::new();
-    //     for var in env_vars {
-    //         let value = std::env::var(var)
-    //             .expect(&format!("{} must be set", var));
-
-    //         env_values.push(value);
-    //     }
-
-    //     format!(
-    //         "postgresql://{}:{}@{}:{}/{}",
-    //         env_values[0], env_values[1], env_values[2], env_values[3], env_values[4]
-    //     )
-    // }
 }

@@ -1,7 +1,7 @@
 use sqlx::PgPool;
 
 use crate::utils::crypto::{hash_password, verify_password};
-use crate::models::user::{AuthUser, CreateUser, User};
+use crate::models::user::{AuthUser, CreateUser, User, UserRole, UserSubscription};
 
 
 const PG_UNIQUE_VIOLATION: &str = "23505";
@@ -15,45 +15,55 @@ impl UserRepository {
         Self { pool }
     }
 
-    pub(crate) async fn authenticate_user(&self, user: AuthUser) -> Result<User, String> {
+    pub(crate) async fn get_user_by_id(&self, user_id: i32) -> Result<User, String> {
         let result = sqlx::query!(
             r#"
-            SELECT id, email::text, username::text, password, created_at
+            SELECT id, email::text, username::text, role as "role: UserRole", subscription as "subscription: UserSubscription", subscription_expires, created_at
             FROM nometa.users
+            WHERE id = $1
+            "#,
+            user_id
+        )
+        .fetch_optional(&self.pool)
+        .await
+        .map_err(|e| format!("internal-server-error"))?
+        .ok_or_else(|| "invalid-login".to_string())?;
+
+        let user = User {
+            id: result.id,
+            email: result.email.ok_or("null")?,
+            username: result.username.ok_or("null")?,
+            role: result.role,
+            subscription: result.subscription,
+            subscription_expires: result.subscription_expires,
+            created_at: result.created_at,
+        };
+
+        Ok(user)
+    }
+
+    pub(crate) async fn authenticate_user(&self, user: AuthUser) -> Result<i32, String> {
+        let result = sqlx::query!(
+            r#"
+            SELECT id, password FROM nometa.users
             WHERE username = $1
             "#,
             user.username
         )
         .fetch_optional(&self.pool)
         .await
-        .map_err(|e| format!("Database error: {}", e))?
-        .ok_or_else(|| "Invalid username or password".to_string())?;
+        .map_err(|e| format!("internal-server-error"))?
+        .ok_or_else(|| "invalid-login".to_string())?;
 
-        let stored_hash = sqlx::query_scalar!(
-            "SELECT password FROM nometa.users WHERE username = $1",
-            user.username
-        )
-        .fetch_optional(&self.pool)
-        .await
-        .map_err(|e| format!("Database error: {}", e.to_string()))?
-        .ok_or_else(|| { "User not found".to_string()})?;
-
-        if ! verify_password(&user.password, &stored_hash) {
-            return Err("Invalid username or password".into());
+        if let Err(e) = verify_password(&user.password, &result.password) {
+            return Err("invalid-login".to_string());
         }
 
-        let authed_user = User {
-            id: result.id,
-            email: result.email.ok_or_else(|| "Empty email from database".to_string())?,
-            username: result.username.ok_or_else(|| "Empty username from database".to_string())?,
-            created_at: result.created_at,
-        };
-
-        Ok(authed_user)
+        Ok(result.id)
     }
 
     pub(crate) async fn create_user(&self, user: CreateUser) -> Result<(), String> {
-        let password_hash = hash_password(&user.password);
+        let password_hash = hash_password(&user.password)?;
 
         let result = sqlx::query!(
             r#"
@@ -71,12 +81,13 @@ impl UserRepository {
             if let sqlx::Error::Database(db_err) = &e {
                 if db_err.code().as_deref() == Some(PG_UNIQUE_VIOLATION) {
                     match db_err.constraint() {
-                        Some("users_email_key") => return Err("Email already exists".into()),
-                        Some("users_username_key") => return Err("Username already exists".into()),
-                        _ => return Err("Duplicate value".into()),
+                        Some("users_email_key") => return Err("email-exists".into()),
+                        Some("users_username_key") => return Err("username-exists".into()),
+                        _ => return Err("duplicate-value".into()),
                     }
                 }
             }
+            // TODO: Add logging
             return Err(format!("Database error: {}", e));
         }
 

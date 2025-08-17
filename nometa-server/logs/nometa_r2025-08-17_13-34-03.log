@@ -1,0 +1,19 @@
+INFO [actix_server::builder] starting 16 workers
+INFO [actix_server::server] Actix runtime found; starting in Actix runtime
+INFO [actix_server::server] starting service: "actix-web-service-0.0.0.0:8080", workers: 16, listening on: 0.0.0.0:8080
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
+WARN [actix_web::middleware::normalize] `NormalizePath::default()` is deprecated. The default trailing slash behavior changed in v4 from `Always` to `Trim`. Update your call to `NormalizePath::new(...)`.
