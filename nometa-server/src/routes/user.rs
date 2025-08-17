@@ -1,13 +1,15 @@
 use actix_web::{get, post, web, HttpResponse, Responder};
 use serde_json::json;
 
-use crate::models::user_models::{AuthUser, CreateUser};
-use crate::respository::user_repo::UserRepository;
+use crate::models::user::{AuthUser, CreateUser};
+use crate::repository::user::UserRepository;
 
 
 #[post("/authenticate")]
-async fn authenticate(user: web::Json<AuthUser>) -> impl Responder {
+async fn authenticate(user: web::Json<AuthUser>, repo: web::Data<UserRepository>) -> impl Responder {
     let user = user.into_inner();
+    
+
     let response = json!({
         "message": format!("Received user login: {}", user.username),
         "password": user.password
@@ -19,11 +21,16 @@ async fn authenticate(user: web::Json<AuthUser>) -> impl Responder {
 #[post("/create")]
 async fn create(user: web::Json<CreateUser>, repo: web::Data<UserRepository>) -> impl Responder {
     let user = user.into_inner();
-    
-    match repo.create_user(user).await {
-        Ok(_) => HttpResponse::Ok().json(json!({"status": "user created"})),
-        Err(e) => HttpResponse::InternalServerError().json(json!({"error": e.to_string()}))
+
+    if let Err(e) = repo.create_user(user).await {
+        if cfg!(debug_assertions) {
+            return HttpResponse::InternalServerError().json(json!({"error": e.to_string()}));
+        }
+
+        return HttpResponse::InternalServerError().json(json!({"error": "Failed to create user"}))
     }
+
+    HttpResponse::Ok().json(json!({"status": "user created"}))
 }
 
 pub(crate) fn config(cfg: &mut web::ServiceConfig) {

@@ -1,6 +1,6 @@
-pub(super) mod user_routes;
+pub(super) mod user;
 
-use actix_web::{web, get, HttpResponse, Responder};
+use actix_web::{get, HttpResponse, Responder};
 use serde::{Deserialize, Serialize};
 
 

@@ -11,6 +11,7 @@ target/
 
 .cargo/
 .vscode/
+.sqlx/
 .idea/
 
 .env
